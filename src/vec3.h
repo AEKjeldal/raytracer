@@ -6,7 +6,6 @@
 #include <iostream>
 
 
-
 using std::sqrt;
 
 class vec3 {
@@ -22,6 +21,7 @@ class vec3 {
 		vec3 operator-() const{ 
 			return vec3(-e[0],-e[1],-e[2]); 
 		}
+
 		double operator[] (int i) const {return e[i];}
 		double operator&  (int i) {return e[i];}
 
@@ -41,6 +41,9 @@ class vec3 {
 			return *this;
 		}
 
+
+
+
 		vec3& operator/=(double t) {
 			return *this /= 1/t;
 		}
@@ -56,6 +59,16 @@ class vec3 {
 // define point3 to be vec3
 using point3=vec3;
 // Helper functions
+
+inline vec3 operator+(const vec3 &v1,const vec3 &v2)
+{
+	return vec3(v1.e[0]+v2.e[0],v1.e[1]+v2.e[1],v1.e[2]+v2.e[2]);
+}
+
+inline vec3 operator*(const vec3 &v,const double t)
+{
+	return vec3(v.e[0]*t,v.e[1]*t,v.e[2]*t);
+}
 
 
 
