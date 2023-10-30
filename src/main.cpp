@@ -5,7 +5,7 @@
 
 using color=vec3;
 
-bool hit_sphere(const point3& center,double radius,const ray& r)
+double hit_sphere(const point3& center,double radius,const ray& r)
 {
 	vec3 oc = r.origin()-center;
 	// quadratic formula 
@@ -13,6 +13,16 @@ bool hit_sphere(const point3& center,double radius,const ray& r)
 	auto b = 2.0* dot(oc,r.direction());
 	auto c = dot(oc,oc) - radius*radius;
 	auto discriminant = b*b -4*a*c;
+
+	if (discriminant < 0)
+	{
+		return -1.0;
+	}
+	else{
+		return (-b-sqrt(discriminant)) / (2.0*a);
+	}
+
+
 	return (discriminant >=0);
 }
 
@@ -20,9 +30,11 @@ bool hit_sphere(const point3& center,double radius,const ray& r)
 
 color ray_color(const ray& r)
 {
-	if(hit_sphere(point3(0,0,-1), 0.5, r))
+	auto t = hit_sphere(point3(0,0,-1), 0.5, r);
+	if(t > 0.0)
 	{
-		return color(1,0,0);
+		vec3 n = unit_vector(r.at(t)-vec3(0,0,-1));
+		return 0.5*color(n.x() + 1,n.y()+1,n.z()+1);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
