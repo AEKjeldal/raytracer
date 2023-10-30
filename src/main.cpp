@@ -1,6 +1,7 @@
 #include <iostream>
 #include "vec3.h"
 #include "ray.h"
+#include "canvas.h"
 
 
 using color=vec3;
@@ -56,16 +57,15 @@ void write_image(std::ostream &out, color pixel)
 int main() {
 	//Setup image
 	auto aspect_ratio = 16/9.0;
-	int image_width = 400;
+	int image_width = 4000;
+	/* int image_height = static_cast<int>(image_width/aspect_ratio); */
+	/* image_height = (image_height < 1) ? 1 : image_height;  */
 
-	// set image height (must be at least 1 pixel)
-	int image_height = static_cast<int>(image_width/aspect_ratio);
-	image_height = (image_height < 1) ? 1 : image_height; 
-
+	canvas image = canvas(image_width,aspect_ratio);
 	
 	// setup camera
 	auto viewport_height = 2.0;
-	auto viewport_width  = viewport_height * (static_cast<double>(image_width)/image_height);
+	auto viewport_width  = viewport_height * (static_cast<double>(image.width)/image.height);
 	auto focal_length    = 1.0;
 	point3 camera_position = point3(0,0,0);
 
@@ -75,8 +75,8 @@ int main() {
 	auto viewport_u = vec3(viewport_width,0,0);
 	auto viewport_v = vec3(0,-viewport_height,0);
 
-	auto px_du = viewport_u/image_width;
-	auto px_dv = viewport_v/image_height;
+	auto px_du = viewport_u/image.width;
+	auto px_dv = viewport_v/image.height;
 
 	// viewport start relative to camera position
 	auto viewport_start		= camera_position - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
@@ -84,22 +84,35 @@ int main() {
 
 
 
-	std::cout<<"P3\n"<<image_width<< ' ' <<image_height<< "\n255\n";
 
-	for (int h=0; h < image_height; h++)
+
+
+
+
+
+
+
+
+
+	/* std::cout<<"P3\n"<<image_width<< ' ' <<image.width<< "\n255\n"; */
+
+	for (int h=0; h < image.height; h++)
 	{
-		std::clog<<"\rRemaining Lines: "<<(image_height-h)<<std::flush;
-		for(int w=0; w < image_width;w++)
+		std::clog<<"\rRemaining Lines: "<<(image.height-h)<<std::flush;
+		for(int w=0; w < image.width;w++)
 		{
 			auto px_center = px_start_pos + (w * px_du) + (h* px_dv);
 
 			auto ray_direction = px_center - camera_position;
 			ray r(camera_position,ray_direction);
 
-			auto pixel = ray_color(r);
-			write_image(std::cout,  pixel);
+			/* auto pixel = ray_color(r); */
+			image.set_color(w, h, ray_color(r));
+
+			/* write_image(std::cout,  pixel); */
 		}
 	}
+	image.write_image(std::cout);
 	std::clog<<"\rDone                             \n";
 
 
