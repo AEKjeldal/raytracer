@@ -8,6 +8,9 @@
 class viewport {
  public:
 	 viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image);
+	 void build();
+
+	 canvas img;
  private:
 
 	 double height;
@@ -19,7 +22,6 @@ class viewport {
 	 vec3 px_du;
 	 vec3 px_dv;
 
-	 canvas img;
 };
 
 #endif
