@@ -65,7 +65,7 @@ int main() {
 	viewport vp  = viewport(2.0,1.0,point3(0,0,0),image);
 	vp.build();
 	std::clog<<"\rWriting Image                             \n";
-	image.write_image(std::cout);
+	vp.img.write_image(std::cout);
 	std::clog<<"\rDone                             \n";
 
 	

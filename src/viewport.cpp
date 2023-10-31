@@ -2,6 +2,7 @@
 #include "ray.h"
 #include "vec3.h"
 #include "canvas.h"
+#include <iostream>
 
 
 using color=vec3;
@@ -35,6 +36,7 @@ color ray_color(const ray& r)
 		return 0.5*color(n.x() + 1,n.y()+1,n.z()+1);
 	}
 
+
 	vec3 unit_direction = unit_vector(r.direction());
 	auto a = 0.5*(unit_direction.y()+ 1.0);
 
@@ -52,8 +54,8 @@ viewport::viewport(double viewport_height,double focal_length,vec3 camera_positi
 	auto viewport_u = vec3(viewport_width,0,0);
 	auto viewport_v = vec3(0,-viewport_height,0);
 
-	px_du = vec3(viewport_width,0,0);
-	px_dv = vec3(0,viewport_height,0);
+	px_du = viewport_u/img.width;
+	px_dv = viewport_v/img.height;
 
 	viewport_start = camera_position - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
 }
@@ -69,6 +71,7 @@ void viewport::build()
 		for(size_t col=0;col<img.width;col++)
 		{
 			auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
+
 			auto ray_direction = px_center - camera_pos;
 			
 			ray r(camera_pos,ray_direction);
@@ -76,8 +79,6 @@ void viewport::build()
 
 		}
 	}
-
 }
-
 
 

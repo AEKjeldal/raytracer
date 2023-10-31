@@ -20,7 +20,6 @@ class viewport {
 
 	 vec3 px_du;
 	 vec3 px_dv;
-
 };
 
 #endif
