@@ -2,6 +2,7 @@
 #include "vec3.h"
 #include "ray.h"
 #include "canvas.h"
+#include "viewport.h"
 
 
 using color=vec3;
@@ -22,7 +23,6 @@ double hit_sphere(const point3& center,double radius,const ray& r)
 	else{
 		return (-b-sqrt(discriminant)) / (2.0*a);
 	}
-
 
 	return (discriminant >=0);
 }
@@ -57,11 +57,12 @@ void write_image(std::ostream &out, color pixel)
 int main() {
 	//Setup image
 	auto aspect_ratio = 16/9.0;
-	int image_width = 4000;
+	int image_width = 400;
 	/* int image_height = static_cast<int>(image_width/aspect_ratio); */
 	/* image_height = (image_height < 1) ? 1 : image_height;  */
 
 	canvas image = canvas(image_width,aspect_ratio);
+	viewport vp  = viewport(2.0,1.0,point3(0,0,0),image);
 	
 	// setup camera
 	auto viewport_height = 2.0;
@@ -75,27 +76,14 @@ int main() {
 	auto viewport_u = vec3(viewport_width,0,0);
 	auto viewport_v = vec3(0,-viewport_height,0);
 
-	auto px_du = viewport_u/image.width;
-	auto px_dv = viewport_v/image.height;
+	vec3 px_du = viewport_u/image.width;
+	vec3 px_dv = viewport_v/image.height;
 
 	// viewport start relative to camera position
-	auto viewport_start		= camera_position - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
-	auto px_start_pos		= viewport_start + 0.5 * (px_du-px_dv);
-
-
-
-
-
-
-
-
-
-
-
-
+	vec3 viewport_start		= camera_position - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
+	vec3 px_start_pos		= viewport_start + 0.5 * (px_du-px_dv);
 
 	/* std::cout<<"P3\n"<<image_width<< ' ' <<image.width<< "\n255\n"; */
-
 	for (int h=0; h < image.height; h++)
 	{
 		std::clog<<"\rRemaining Lines: "<<(image.height-h)<<std::flush;

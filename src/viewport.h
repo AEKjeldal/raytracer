@@ -7,15 +7,19 @@
 
 class viewport {
  public:
-	 viewport(double viewport_height,double focal_length,canvas image);
+	 viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image);
  private:
 
-	 double viewport_height;
-	 double focal_point;
+	 double height;
+	 double l_focal;
 
-	 double px_du;
-	 double px_dv;
+	 vec3 viewport_start;
+	 vec3 camera_pos;
 
+	 vec3 px_du;
+	 vec3 px_dv;
+
+	 canvas img;
 };
 
 #endif
