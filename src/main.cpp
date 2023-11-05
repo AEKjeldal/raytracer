@@ -4,6 +4,7 @@
 #include "canvas.h"
 #include "viewport.h"
 
+#include "sphere.h"
 
 using color=vec3;
 
