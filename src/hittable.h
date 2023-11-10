@@ -3,6 +3,7 @@
 
 
 #include "ray.h"
+#include "vec3.h"
 
 class hit_record
 {
@@ -10,6 +11,15 @@ class hit_record
 		vec3 p;
 		vec3 normal;
 		double t;
+		bool front_face;
+		void set_face_normal(const ray& r,const vec3& outward_normal)
+		{
+
+			// NOTE: outward normal is assumed to be normalized!
+			front_face = dot(r.direction(), outward_normal);
+			normal = front_face? outward_normal: -outward_normal;
+
+		}
 };
 
 
