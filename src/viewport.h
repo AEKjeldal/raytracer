@@ -19,7 +19,7 @@
 class viewport {
  public:
 	 viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image);
-	 void build();
+	 void render_scene();
 	 canvas img;
  private:
 

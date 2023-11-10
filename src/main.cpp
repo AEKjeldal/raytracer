@@ -39,7 +39,7 @@ int main() {
 
 
 
-	vp.build();
+	vp.render_scene();
 	std::clog<<"\rWriting Image                             \n";
 	vp.img.write_image(std::cout);
 	std::clog<<"\rDone                             \n";
