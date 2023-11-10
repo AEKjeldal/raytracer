@@ -23,8 +23,22 @@ int main() {
 	auto aspect_ratio = 16/9.0;
 	int image_width = 400;
 
+
+
+
+
 	canvas image = canvas(image_width,aspect_ratio);
 	viewport vp  = viewport(2.0,1.0,point3(0,0,0),image);
+
+
+	// build world
+	
+
+
+
+
+
+
 	vp.build();
 	std::clog<<"\rWriting Image                             \n";
 	vp.img.write_image(std::cout);

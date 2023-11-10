@@ -1,7 +1,9 @@
 #include "viewport.h"
+#include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
 #include "canvas.h"
+#include <cmath>
 #include <iostream>
 
 
@@ -27,14 +29,21 @@ double hit_sphere(const point3& center,double radius,const ray& r)
 	return (discriminant >=0);
 }
 
-color ray_color(const ray& r)
+color ray_color(const ray& r, const hittable_object& scene)
 {
-	auto t = hit_sphere(point3(0,0,-1), 0.5, r);
-	if(t > 0.0)
+	hit_record rec; 
+	if(scene.hit(r,0,infinity,rec))
 	{
-		vec3 n = unit_vector(r.at(t)-vec3(0,0,-1));
-		return 0.5*color(n.x() + 1,n.y()+1,n.z()+1);
+		return 0.5*(rec.normal + color(1,1,1));
 	}
+
+
+	/* auto t = hit_sphere(point3(0,0,-1), 0.5, r); */
+	/* if(t > 0.0) */
+	/* { */
+	/* 	vec3 n = unit_vector(r.at(t)-vec3(0,0,-1)); */
+	/* 	return 0.5*color(n.x() + 1,n.y()+1,n.z()+1); */
+	/* } */
 
 
 	vec3 unit_direction = unit_vector(r.direction());
@@ -61,7 +70,7 @@ viewport::viewport(double viewport_height,double focal_length,vec3 camera_positi
 }
 
 
-void viewport::build()
+void viewport::render_scene()
 {
 	vec3 px_start_pos = viewport_start + 0.5 * (px_du-px_dv);
 
