@@ -70,7 +70,7 @@ viewport::viewport(double viewport_height,double focal_length,vec3 camera_positi
 }
 
 
-void viewport::render_scene()
+void viewport::render_scene(const object_container& scene)
 {
 	vec3 px_start_pos = viewport_start + 0.5 * (px_du-px_dv);
 
@@ -84,7 +84,7 @@ void viewport::render_scene()
 			auto ray_direction = px_center - camera_pos;
 			
 			ray r(camera_pos,ray_direction);
-			img.set_color(col, row, ray_color(r));
+			img.set_color(col, row, ray_color(r,scene));
 
 		}
 	}
