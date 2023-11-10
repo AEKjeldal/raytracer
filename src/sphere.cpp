@@ -30,6 +30,12 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 	}
 	rec.t = root;
 	rec.p = r.at(rec.t);
+	// determine at which direction the ray is coming from
+	// we only detect hits at the edge => we know we are at max r!
+	vec3 outward_normal = (rec.p - center) / radius; 
+	rec.set_face_normal(r, outward_normal);
+
+
 	rec.normal = (rec.p - center) / radius;
 
 	return true;
