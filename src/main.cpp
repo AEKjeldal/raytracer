@@ -1,10 +1,12 @@
 #include <iostream>
+#include <memory>
 #include "vec3.h"
 #include "ray.h"
 #include "canvas.h"
 #include "viewport.h"
 
 #include "sphere.h"
+#include "hittable_lits.h"
 
 using color=vec3;
 
@@ -23,9 +25,24 @@ int main() {
 	auto aspect_ratio = 16/9.0;
 	int image_width = 400;
 
+
+
+
+
 	canvas image = canvas(image_width,aspect_ratio);
 	viewport vp  = viewport(2.0,1.0,point3(0,0,0),image);
-	vp.build();
+
+
+	// build world
+	object_container scene;
+	scene.add(std::make_shared<sphere>(point3(0,0,-1),0.5));
+	scene.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
+
+
+
+
+
+	vp.render_scene(scene);
 	std::clog<<"\rWriting Image                             \n";
 	vp.img.write_image(std::cout);
 	std::clog<<"\rDone                             \n";

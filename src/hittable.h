@@ -16,9 +16,8 @@ class hit_record
 		{
 
 			// NOTE: outward normal is assumed to be normalized!
-			front_face = dot(r.direction(), outward_normal);
+			front_face = dot(r.direction(), outward_normal) < 0;
 			normal = front_face? outward_normal: -outward_normal;
-
 		}
 };
 
