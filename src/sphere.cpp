@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "sphere.h"
 
 sphere::sphere(point3 _center,double _radius):center(_center), radius(_radius) {};
@@ -14,14 +15,14 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 
 
 	auto discriminant= half_b*half_b-a*c;
-	if(discriminant<0) return false;
+	if(discriminant < 0) return false;
 
 	auto sqrt_discriminant = sqrt(discriminant);
 
 	auto root = (-half_b - sqrt_discriminant) / a;
 
 	// we want the root to be within the timewindow
-	if(root <= t_min || t_max <=root) {
+	if(root <= t_min || t_max <= root) {
 		root = (-half_b + sqrt_discriminant)/ a;
 		if (root <= t_min || t_max <= root)
 			return false;
