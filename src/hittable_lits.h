@@ -24,7 +24,7 @@ class object_container: public hittable_object {
 
 		bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const override {
 			hit_record temp_rec;
-			bool hit_obj;
+			bool hit_obj=false;
 
 			auto closest_to_hit = t_max;
 			for (const auto& object:objects)
