@@ -36,7 +36,7 @@ int main() {
 	// build world
 	object_container scene;
 	scene.add(std::make_shared<sphere>(point3(0,0,-1),0.5));
-	/* scene.add(std::make_shared<sphere>(point3(0,100.5,-1),100)); */
+	scene.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
 
 
 
