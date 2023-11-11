@@ -19,9 +19,12 @@
 class viewport {
  public:
 	 viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image);
+
 	 void render_scene(const object_container& scene);
 	 canvas img;
  private:
+	 color ray_color(const ray& r, const hittable_object& scene);
+
 
 	 double height;
 	 double l_focal;
