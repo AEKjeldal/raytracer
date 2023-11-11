@@ -44,31 +44,42 @@ color viewport::ray_color(const ray& r, const hittable_object& scene)
 }
 
 
-viewport::viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image):camera_pos(camera_position),img(image)
+viewport::viewport(double viewport_height,vec3 camera_position,canvas image):camera_pos(camera_position),img(image) { }
+
+void viewport::initialize()
 {
-	height  = viewport_height;
+
+	height  = 2.0;
+	auto focal_length = 1.0;
+
 	l_focal = focal_length;
 	
-	auto viewport_width  = viewport_height * (static_cast<double>(img.width)/img.height);
+	width  = height * (static_cast<double>(img.get_width())/img.get_height());
 
-	auto viewport_u = vec3(viewport_width,0,0);
-	auto viewport_v = vec3(0,-viewport_height,0);
+	auto viewport_u = vec3(width,0,0);
+	auto viewport_v = vec3(0,-height,0);
 
-	px_du = viewport_u/img.width;
-	px_dv = viewport_v/img.height;
+	px_du = viewport_u/img.get_width();
+	px_dv = viewport_v/img.get_height();
 
-	viewport_start = camera_position - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
+	auto viewport_start = camera_pos - vec3(0,0,focal_length)-viewport_u/2-viewport_v/2;
+	px_start_pos = viewport_start + 0.5 * (px_du-px_dv);
 }
+
+
+
+
 
 
 void viewport::render_scene(const object_container& scene)
 {
-	vec3 px_start_pos = viewport_start + 0.5 * (px_du-px_dv);
 
-	for(size_t row=0;row<img.height;row++)
+	initialize();
+
+	for(size_t row=0;row<img.get_height();row++)
 	{
-		std::clog<<"\rRemaining Lines: "<<(img.height-row)<<std::flush;
-		for(size_t col=0;col<img.width;col++)
+		/* std::clog<<"\rRemaining Lines: "<<(img.get_height()-row)<<std::flush; */
+		for(size_t col=0;col<img.get_width();col++)
 		{
 			auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
 
@@ -76,7 +87,6 @@ void viewport::render_scene(const object_container& scene)
 			
 			ray r(camera_pos,ray_direction);
 			img.set_color(col, row, ray_color(r,scene));
-
 		}
 	}
 }
