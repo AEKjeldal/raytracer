@@ -16,17 +16,27 @@
 
 
 
+
 class viewport {
  public:
-	 viewport(double viewport_height,double focal_length,vec3 camera_position,canvas image);
+
+
+	 viewport(double viewport_height,vec3 camera_position,canvas image);
+
+
 	 void render_scene(const object_container& scene);
 	 canvas img;
  private:
+	 void initialize();
+	 color ray_color(const ray& r, const hittable_object& scene);
+
 
 	 double height;
+	 double width;
+
 	 double l_focal;
 
-	 vec3 viewport_start;
+	 vec3 px_start_pos;
 	 vec3 camera_pos;
 
 	 vec3 px_du;

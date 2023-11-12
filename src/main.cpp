@@ -27,19 +27,15 @@ int main() {
 
 
 
-
-
 	canvas image = canvas(image_width,aspect_ratio);
-	viewport vp  = viewport(2.0,1.0,point3(0,0,0),image);
+	viewport vp  = viewport(2.0,point3(0,0,0),image);
+
 
 
 	// build world
 	object_container scene;
 	scene.add(std::make_shared<sphere>(point3(0,0,-1),0.5));
 	scene.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
-
-
-
 
 
 	vp.render_scene(scene);
