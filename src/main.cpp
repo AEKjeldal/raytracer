@@ -31,6 +31,7 @@ int main() {
 	viewport vp  = viewport(2.0,point3(0,0,0),image);
 
 
+
 	// build world
 	object_container scene;
 	scene.add(std::make_shared<sphere>(point3(0,0,-1),0.5));

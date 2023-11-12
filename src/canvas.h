@@ -20,14 +20,15 @@ class canvas {
 		int get_width();
 		int get_height();
 
-		canvas set_width(int w);
-		canvas set_height(int h);
+		void set_width(int w);
+		void set_height(int h);
 
 
 
 	private:
 		int width;
 		int height;
+		double aspect_ratio;
 
 		void resize();
 		std::vector<std::vector<color>> canvas_ptr;

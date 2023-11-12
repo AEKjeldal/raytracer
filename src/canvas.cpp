@@ -9,7 +9,6 @@ canvas::canvas(int width_px,double aspect_ratio)
 {
 	width = (width_px < 1) ? 1 : width_px;
 
-
 	height = static_cast<int>(width/aspect_ratio);
 	height = (height < 1) ? 1 : height; 
 
@@ -26,29 +25,25 @@ void canvas::resize()
 
 int canvas::get_width()
 {
-	resize();
 	return width;
 }
 
 int canvas::get_height()
 {
-	resize();
 	return height;
 }
 
-canvas canvas::set_height(int h)
+void canvas::set_height(int h)
 {
-	
-	height = h;
-	return *this;
+	height = (h < 1) ? 1 : h; 
+	resize();
 }
 
 
-canvas canvas::set_width(int w)
+void canvas::set_width(int w)
 {
-	
-	width = w;
-	return *this;
+	width = (w < 1) ? 1 : w;
+	resize();
 }
 
 
