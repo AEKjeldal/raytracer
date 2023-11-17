@@ -26,11 +26,13 @@ inline double degrees_to_radians(double degrees) {
 }
 
 
+// TODO move this to c++ native solution
 inline double random_double()
 {
 	return rand() / (RAND_MAX+1.0);
 }
 
+// TODO move this to c++ native solution
 inline double random_double(double min,double max)
 {
 	return min +  (max-min)*random_double();
@@ -42,6 +44,7 @@ inline double random_double(double min,double max)
 
 #include "ray.h"
 #include "vec3.h"
+#include "interval.h"
 
 
 
