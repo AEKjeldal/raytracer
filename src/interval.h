@@ -25,7 +25,7 @@ class interval
 			return x;
 		}
 
-		static const interval empty; universe;
+		static const interval empty, universe;
 
 };
 

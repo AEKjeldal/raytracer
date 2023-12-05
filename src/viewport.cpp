@@ -7,7 +7,6 @@
 #include <iostream>
 
 
-using color=vec3;
 
 double hit_sphere(const point3& center,double radius,const ray& r)
 {
@@ -34,7 +33,7 @@ color viewport::ray_color(const ray& r, const hittable_object& scene)
 	hit_record rec; 
 	if(scene.hit(r,0,infinity,rec))
 	{
-		return 0.5*(rec.normal + color(1,1,1));
+		return 0.5*( color(1,1,1) + rec.normal);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());

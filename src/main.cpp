@@ -8,8 +8,6 @@
 #include "sphere.h"
 #include "hittable_lits.h"
 
-using color=vec3;
-
 
 void write_image(std::ostream &out, color pixel)
 {
