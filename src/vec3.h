@@ -57,47 +57,59 @@ class vec3 {
 		}
 };
 
+
+
+
+
+
+
 // define point3 to be vec3
 using point3=vec3;
 // Helper functions
 
-inline vec3 operator+(const vec3 &v1,const vec3 &v2)
+template<typename T, typename U>
+inline T operator+(const T &v1,const U &v2)
 {
-	return vec3(v1.e[0]+v2.e[0],v1.e[1]+v2.e[1],v1.e[2]+v2.e[2]);
-}
-
-inline vec3 operator-(const vec3 &v1,const vec3 &v2)
-{
-	return v1 +-v2;
+	return T(v1.e[0]+v2.e[0],v1.e[1]+v2.e[1],v1.e[2]+v2.e[2]);
 }
 
 
-inline vec3 operator*(const vec3 &v,const double t)
-{
-	return vec3(v.e[0]*t,v.e[1]*t,v.e[2]*t);
+template<typename T>
+inline T operator-(const T &v1,const T &v2){
+	return v1+-v2;
 }
 
-inline vec3 operator*(const double t,const vec3 &v)
+
+template<typename T>
+inline T operator*(const T &v,const double t)
+{
+	return T(v.e[0]*t,v.e[1]*t,v.e[2]*t);
+}
+
+template<typename T>
+inline T operator*(const double t,const T &v)
 {
 	return v*t;
 }
 
 
-inline vec3 operator/(const vec3 &v,const double t)
+template<typename T>
+inline T operator/(const T &v,const double t)
 {
-	return vec3(v.e[0]/t,v.e[1]/t,v.e[2]/t);
+	return T(v.e[0]/t,v.e[1]/t,v.e[2]/t);
 }
 
-inline vec3 unit_vector(vec3 v)
+template<typename T>
+inline T unit_vector(T v)
 {
 	return v/v.length();
 }
 
-inline double dot(const vec3 &a, const vec3 &b )
+template<typename T>
+inline double dot(const T &a, const T &b )
 {
 	return a.e[0]*b.e[0] + a.e[1]*b.e[1] + a.e[2]*b.e[2];
 }
-
 
 #endif
 

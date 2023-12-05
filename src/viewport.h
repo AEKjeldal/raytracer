@@ -24,9 +24,11 @@ class viewport {
 	 viewport(double viewport_height,vec3 camera_position,canvas image);
 
 
-	 void render_scene(const object_container& scene);
+	 void render_scene(const object_container& scene,int samples=1);
 	 canvas img;
  private:
+	 ray get_ray(int x,int y);
+	 vec3 pixel_sample_square();
 	 void initialize();
 	 color ray_color(const ray& r, const hittable_object& scene);
 

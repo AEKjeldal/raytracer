@@ -1,4 +1,5 @@
 #include "viewport.h"
+#include "common.h"
 #include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
@@ -7,7 +8,6 @@
 #include <iostream>
 
 
-using color=vec3;
 
 double hit_sphere(const point3& center,double radius,const ray& r)
 {
@@ -34,7 +34,7 @@ color viewport::ray_color(const ray& r, const hittable_object& scene)
 	hit_record rec; 
 	if(scene.hit(r,0,infinity,rec))
 	{
-		return 0.5*(rec.normal + color(1,1,1));
+		return 0.5*( color(1,1,1) + rec.normal);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
@@ -68,27 +68,63 @@ void viewport::initialize()
 
 
 
-
-
-
-void viewport::render_scene(const object_container& scene)
+void viewport::render_scene(const object_container& scene,int samples)
 {
 
 	initialize();
-
 	std::clog<<"\rRemaining Lines: "<<img.get_height()<<std::flush;
 	for(size_t row=0;row<img.get_height();row++)
 	{
 		for(size_t col=0;col<img.get_width();col++)
 		{
-			auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
+			// auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
 
-			auto ray_direction = px_center - camera_pos;
+			// auto ray_direction = px_center - camera_pos;
 			
-			ray r(camera_pos,ray_direction);
-			img.set_color(col, row, ray_color(r,scene));
+			for (int i=0; i < samples; i++)
+			{
+				//ray r(camera_pos,ray_direction);
+				ray r = get_ray(col,row);
+				img.set_color(col, row, ray_color(r,scene));
+			}
 		}
 	}
 }
+
+ray viewport::get_ray(int x, int y)
+{
+	auto p_center = px_start_pos + (x * px_du) + (y * px_dv);
+	auto p_sample = p_center + pixel_sample_square();
+
+	auto ray_orig = camera_pos;
+	auto ray_direction = p_sample - ray_orig;
+
+	return ray(ray_orig,ray_direction);
+}
+
+
+
+vec3 viewport::pixel_sample_square()
+{
+	auto px = -0.5 + random_double();
+	auto py = -0.5 + random_double();
+	return (px * px_du) + (py  * px_dv);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
