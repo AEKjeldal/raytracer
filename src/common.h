@@ -30,6 +30,7 @@ inline double degrees_to_radians(double degrees) {
 inline double random_double()
 {
 	return rand() / (RAND_MAX+1.0);
+
 }
 
 // TODO move this to c++ native solution

@@ -12,7 +12,6 @@ canvas::canvas(int width_px,double aspect_ratio)
 	height = static_cast<int>(width/aspect_ratio);
 	height = (height < 1) ? 1 : height; 
 
-	/* canvas_ptr = new color[width*height]; */
 	resize();
 }
 
@@ -49,7 +48,7 @@ void canvas::set_width(int w)
 
 void canvas::set_color(const int col,const int row,const color pixel)
 {
-	canvas_ptr[row][col] = pixel;
+	canvas_ptr[row][col] += pixel;
 }
 
 
@@ -61,13 +60,12 @@ void canvas::write_image(std::ostream &out)
 		size_t row_offset = width*row;
 		for(size_t col=0; col<width;col++)
 		{
-		out << static_cast<int>(255.999*canvas_ptr[row][col].x())<<' '
-			<< static_cast<int>(255.999*canvas_ptr[row][col].y())<<' '
-			<< static_cast<int>(255.999*canvas_ptr[row][col].z())<<'\n';
+
+		auto pixel = canvas_ptr[row][col];
+		out << static_cast<int>(255.999*pixel.x()/pixel.get_writes())<<' '
+			<< static_cast<int>(255.999*pixel.y()/pixel.get_writes())<<' '
+			<< static_cast<int>(255.999*pixel.z()/pixel.get_writes())<<'\n';
 		}
 	}
 }
-
-
-
 

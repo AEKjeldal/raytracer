@@ -36,7 +36,7 @@ int main() {
 	scene.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
 
 
-	vp.render_scene(scene);
+	vp.render_scene(scene,100);
 	std::clog<<"\rWriting Image                             \n";
 	vp.img.write_image(std::cout);
 	std::clog<<"\rDone                             \n";
