@@ -34,7 +34,8 @@ color viewport::ray_color(const ray& r, const hittable_object& scene)
 	hit_record rec; 
 	if(scene.hit(r,0,infinity,rec))
 	{
-		return 0.5*( color(1,1,1) + rec.normal);
+		vec3 direction = random_on_hemisphere(rec.normal);
+		return 0.5 * ray_color(ray(rec.p,direction),scene);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
@@ -83,7 +84,6 @@ void viewport::render_scene(const object_container& scene,int samples)
 			
 			for (int i=0; i < samples; i++)
 			{
-				//ray r(camera_pos,ray_direction);
 				ray r = get_ray(col,row);
 				img.set_color(col, row, ray_color(r,scene));
 			}
