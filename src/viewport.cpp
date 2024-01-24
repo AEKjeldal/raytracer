@@ -8,6 +8,11 @@
 #include <iostream>
 
 
+#include <stdio.h>
+
+
+
+
 
 double hit_sphere(const point3& center,double radius,const ray& r)
 {
@@ -32,10 +37,16 @@ double hit_sphere(const point3& center,double radius,const ray& r)
 color viewport::ray_color(const ray& r, const hittable_object& scene)
 {
 	hit_record rec; 
-	if(scene.hit(r,0,infinity,rec))
+	if (r.get_bounce_count() >= max_bounces)
 	{
-		vec3 direction = random_on_hemisphere(rec.normal);
-		return 0.5 * ray_color(ray(rec.p,direction),scene);
+		return color(0,0,0);
+	}
+
+	if(scene.hit(r,0.001,infinity,rec))
+	{
+		//vec3 direction = random_on_hemisphere(rec.normal); // Old 
+		vec3 direction = rec.normal + random_unit_vector(); // Lambertian reflection
+		return 0.5 * ray_color(ray(rec.p,direction,r.get_bounce_count()+1),scene);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
@@ -73,9 +84,10 @@ void viewport::render_scene(const object_container& scene,int samples)
 {
 
 	initialize();
-	std::clog<<"\rRemaining Lines: "<<img.get_height()<<std::flush;
+	/* std::clog<<"\rRemaining Lines: "<<img.get_height()<<std::flush; */
 	for(size_t row=0;row<img.get_height();row++)
 	{
+		/* std::clog<<"\rRemaining Lines: "<<img.get_height()-row<<std::flush; */
 		for(size_t col=0;col<img.get_width();col++)
 		{
 			// auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
