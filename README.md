@@ -1,2 +1,2 @@
-# raytracer-
+# raytracer
 Just a simple raytracer
