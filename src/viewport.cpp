@@ -83,8 +83,10 @@ void viewport::render_scene(const object_container& scene,int samples)
 {
 
 	initialize();
+
 	for(size_t row=0;row<img.get_height();row++)
 	{
+		/* std::clog<<"\rRemaining Lines: "<<img.get_height()-row<<std::flush; */
 		for(size_t col=0;col<img.get_width();col++)
 		{
 			for (int i=0; i < samples; i++)
