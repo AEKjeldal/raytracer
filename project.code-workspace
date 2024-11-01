@@ -1,0 +1,90 @@
+{
+    // Folders included in the workspace
+    folders: [
+        {
+            name: 'type1',
+            path: '/path/to/firstType'
+        },
+        {
+            path: '/path/to/type2'
+        }
+    ],
+
+    // Workspace settings
+    settings: {
+        'editor.tabSize': 4,
+        'files.autoSave': 'off',
+        'C_Cpp.default.configurationProvider': 'ms-vscode.cpptools'
+    },
+
+    // Debug configurations
+    launch: {
+        configurations: [],
+        compounds: []
+    },
+
+    // Build tasks
+
+    tasks: [
+		{
+			label: 'Make Project',
+            type: 'shell',
+			command: 'make',
+            group: {
+                kind: 'build',
+            },
+            problemMatcher: [''],
+            presentation: {
+                echo: true,
+                reveal: 'always',
+                focus: false,
+                panel: 'shared'
+            },
+            options: {
+                cwd: '${workspaceFolder}'
+            }
+		},
+        {
+            label: 'Run Project',
+            type: 'shell',
+            command: './raytracer',
+			args: ['>>' ,'output.bmp'],
+			"dependsOn": ["Make Project"],
+            group: {
+                kind: 'build',
+                isDefault: true
+            },
+            problemMatcher: ['$gcc'],
+            presentation: {
+                echo: true,
+                reveal: 'always',
+                focus: false,
+                panel: 'shared'
+            },
+            options: {
+                cwd: '${workspaceFolder}'
+            }
+        },
+        {
+            label: 'Time Project',
+            type: 'shell',
+            command: 'time',
+			args: ['./raytracer'],
+			"dependsOn": ["Make Project"],
+            group: {
+                kind: 'build',
+                isDefault: true
+            },
+            problemMatcher: ['$gcc'],
+            presentation: {
+                echo: true,
+                reveal: 'always',
+                focus: false,
+                panel: 'shared'
+            },
+            options: {
+                cwd: '${workspaceFolder}'
+            }
+        }
+    ]
+}

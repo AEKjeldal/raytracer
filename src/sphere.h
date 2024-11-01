@@ -9,7 +9,7 @@
 class sphere : public hittable_object {
 	public: 
 		sphere(point3 _center,double _radius);
-		bool hit(const ray& r, double t_min, double t_max, hit_record& rec)const override;
+		virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec)const override;
 		/* { */
 		/* 	return true; */
 		/* }; */
