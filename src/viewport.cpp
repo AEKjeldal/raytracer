@@ -44,13 +44,12 @@ color viewport::ray_color(const ray& r, const hittable_object& scene)
 
 	if(scene.hit(r,0.001,infinity,rec))
 	{
-		//vec3 direction = random_on_hemisphere(rec.normal); // Old 
 		vec3 direction = rec.normal + random_unit_vector(); // Lambertian reflection
 		return 0.5 * ray_color(ray(rec.p,direction,r.get_bounce_count()+1),scene);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
-	auto a = 0.5*(unit_direction.y()+ 1.0);
+	auto a = 0.5 * (unit_direction.y()+ 1.0);
 
 	return (1.0-a) *color(1.0,1.0,1.0) + a*color(0.5,0.7,1.0);
 }
@@ -84,16 +83,10 @@ void viewport::render_scene(const object_container& scene,int samples)
 {
 
 	initialize();
-	/* std::clog<<"\rRemaining Lines: "<<img.get_height()<<std::flush; */
 	for(size_t row=0;row<img.get_height();row++)
 	{
-		/* std::clog<<"\rRemaining Lines: "<<img.get_height()-row<<std::flush; */
 		for(size_t col=0;col<img.get_width();col++)
 		{
-			// auto px_center = px_start_pos + (col * px_du) + (row* px_dv);
-
-			// auto ray_direction = px_center - camera_pos;
-			
 			for (int i=0; i < samples; i++)
 			{
 				ray r = get_ray(col,row);

@@ -54,7 +54,7 @@ void canvas::set_color(const int col,const int row,const color pixel)
 
 void canvas::write_image(std::ostream &out)
 {
-	std::cout<<"P3\n"<<width<< ' ' <<height<< "\n255\n";
+	out<<"P3\n"<<width<< ' ' <<height<< "\n255\n";
 	for (int row=0; row<height; row++)
 	{
 		size_t row_offset = width*row;

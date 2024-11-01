@@ -8,6 +8,8 @@
 #include "sphere.h"
 #include "hittable_lits.h"
 
+#include <fstream>
+
 
 void write_image(std::ostream &out, color pixel)
 {
@@ -36,9 +38,13 @@ int main() {
 	scene.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
 
 
+	std::fstream imageFile("output.bmp",imageFile.out);
+
+
 	vp.render_scene(scene,100);
 	std::clog<<"\rWriting Image                             \n";
-	vp.img.write_image(std::cout);
+	vp.img.write_image(imageFile);
+	imageFile.close();
 	std::clog<<"\rDone                             \n";
 
 

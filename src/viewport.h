@@ -11,12 +11,6 @@
 #include "hittable_lits.h"
 
 
-
-
-
-
-
-
 class viewport {
  public:
 
